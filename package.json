@@ -1,0 +1,24 @@
+{
+  "name": "mynodejs",
+  "version": "1.0.0",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "author": "EderQuadros-Genexus",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@sap-cloud-sdk/http-client": "^3.22.2",
+    "@sap/cds": "^8.4.1",
+    "@sap/xsenv": "^5.4.0",
+    "axios": "^1.7.7",
+    "express": "^4.21.1",
+    "express-session": "^1.18.1",
+    "sap-cf-axios": "^1.0.2"
+  },
+  "features": {
+    "fetch_csrf": true,
+    "odata_new_adapter": false
+  }
+}

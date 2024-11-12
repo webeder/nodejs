@@ -1,0 +1,68 @@
+
+
+
+/*
+const cds = require('@sap/cds');
+const { executeHttpRequest } = require('@sap-cloud-sdk/http-client');
+
+// Função principal para realizar a operação de GET e POST
+async function performRequest(req) {
+  try {
+    let filledHeaders = {};
+    const fetchHeader = { "x-csrf-token": "fetch" };
+
+    // Caminho para o serviço e destination name especificado
+    const servicePath = '/sap/opu/odata/sap/z_gw_authorization_poc_srv/AuthorizationSet/';
+    const destinationName = 'S4HANA_API_CLFN_PRODUCT_SRV'; // Nome da destination especificado diretamente
+
+    // Realiza a chamada GET para buscar o token CSRF
+    const getResponse = await executeHttpRequest(
+      { destinationName: destinationName },  // Usa 'dev120' como destination
+      {
+        method: 'GET',
+        url: servicePath,
+        headers: fetchHeader
+      }
+    );
+
+    // Preenche os headers com Cookie e x-csrf-token
+    filledHeaders['Cookie'] = getResponse.headers['set-cookie'];
+    filledHeaders['x-csrf-token'] = getResponse.headers['x-csrf-token'];
+    console.log('Headers preenchidos:', filledHeaders);
+
+    // Anexa os headers preenchidos ao req.headers
+    Object.assign(req.headers, filledHeaders);
+
+    // Conecta ao serviço AUTHORIZATION_SERVICE via CDS
+    const authorizationService = await cds.connect.to('AUTHORIZATION_SERVICE');
+
+    // Envia uma requisição POST para o serviço com os headers preenchidos
+    const postResponse = await authorizationService.send('POST', 'AuthorizationSet', req.data.newBupa, req.headers);
+    console.log('Resposta da requisição POST:', postResponse);
+
+    return postResponse;
+
+  } catch (error) {
+    console.error('Erro ao executar a requisição:', error.message);
+    throw error;
+  }
+}
+
+// Exemplo de uso da função com requisição (req) e response (res) no Express
+const express = require('express');
+const app = express();
+
+app.use(express.json());
+
+app.post('/execute', async (req, res) => {
+  try {
+    const result = await performRequest(req);
+    res.status(200).send(result);
+  } catch (error) {
+    res.status(500).send({ error: error.message });
+  }
+});
+
+app.listen(3000, () => {
+  console.log('Servidor rodando em http://localhost:3000');
+}); */

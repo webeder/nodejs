@@ -1,0 +1,7 @@
+---
+applications:
+- name: mynodejs
+  random-route: true
+  memory: 1500M
+  buildpacks:
+  - nodejs_buildpack
