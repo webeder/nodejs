@@ -1,191 +1,46 @@
-const express = require("express");
-const axios = require("axios");
-const SapCfAxios = require("sap-cf-axios").default;
+const express = require('express');
+const sapCfAxios = require('sap-cf-axios').default; // Importa o sap-cf-axios
+const app = express();
+const PORT = 8080; // Ou a porta que você preferir
 
-const app =  express();
-const fs = require('fs'); 
+// Configurações de autenticação e URL da API
+const sapClient = '110';
+const destinationName = 'S4HANA_API_CLFN_PRODUCT_SRV'; // Substitua pelo nome do seu destino configurado no SAP Cloud Foundry
 
-const PORT = process.env.PORT || 8080;
+// Cria uma instância do sap-cf-axios para o destino SAP
+const axios = sapCfAxios(destinationName);
 
-
-
-
-// Middleware para interpretar JSON do corpo da requisição
-//app.use(express.json());
-
-// Middleware para interpretar JSON do corpo da requisição
-//app.use(express.json());
-
-// Instância do cliente SAP CF Axios para a destination configurada
-const axiosInstance = SapCfAxios("dev120");
- 
-
-// Função para lidar com a requisição POST e encaminhar para o SAP
-const handleAuthorizationRequest = async (req, res) => {
-   // try {
-        // Extrai headers e corpo da requisição
-        var  csrfToken = req.headers["x-csrf-token"];
-        var  sapClient = req.headers["sap-client"];  
-        var cookie = req.headers["Cookie"]; 
-
-       
-
-     //   csrfToken = csrfToken.replace(" [ 'x-csrf-token', '", "'");
-     //   csrfToken = csrfToken.replace("' ],", "'");
-
-
-     //   const requestData2 =  req.body;     
-    //    const requestData = JSON.stringify(req.body, null, 2);
-       var XSRFTOKEN = cookie ;
-       var xsrfHeaderName = csrfToken;
-
-        if (!csrfToken || !sapClient) {
-            return res.status(400).send({ error: "Headers x-csrf-token and sap-client are required" });
-        }
-
-        // Faz a chamada POST ao SAP usando o SAP CF Axios
-        const response = await axiosInstance({
-            method: "POST",
-            url: "sap/opu/odata/sap/z_gw_authorization_poc_srv/AuthorizationSet/",
-            headers: {
-            "DEFAULT_CONTENT_TYPE": "application/octet-stream",
-              "content-type": "text/plain; charset=utf-8", 
-              "xsrfCookieName": XSRFTOKEN,
-               "xsrfHeaderName": xsrfHeaderName, 
-                "x-csrf-token": csrfToken ,
-              //  "sap-client": "110",
-               // "Authorization": "Basic SUFTX0RFVl9QT0M6UGFzc3dvcmRpYXNwb2NAMjAyNA==",
-                 "set-cookie": "sap-usercontext=sap-client=100; path=/", 
-                 "set-cookie": cookie
-                 //"Content-Type": "application/json"
-            },
-            data: {
-                "Uname": "ZEUS_02",
-                "ObjectName": "",
-                "StartPurchorg": "",
-                "StartPurchgroup": "",
-                "EndPurchorg": "",
-                "EndPurchgroup": "",
-                "Status": false,
-                "OrgLevel": [],
-                "Objects": [
-                    {
-                        "Uname": "",
-                        "ObjectName": "",
-                        "Activities": []
-                    }
-                ]
-            }
-        }); 
-
-        res.send("URL da Destination:" + csrfToken+' json: '+response.headers); 
-
-
-     /*   const caminhoDoArquivo = 'public/csrfToken.txt';
-
-    // Grava o token no arquivo
-    fs.writeFile(caminhoDoArquivo, 'csrfToken = ${csrfToken}', (err) => {
-        if (err) {
-            console.error('Erro ao gravar o arquivo:', err);
-            return res.status(500).send("Erro ao gravar o token.");
-        } else {
-            console.log('Token CSRF gravado com sucesso!');
-            return res.send("Token CSRF gravado com sucesso!");
-        }
-    });*/
-
-
-
-        // Envia a resposta JSON do SAP diretamente para o cliente
-       // res.status(response.status).send(response.data);
-      // console.log("URL da Destination:", axiosInstance.defaults.baseURL);
-   
-  
-
-   // } catch (error) {
-   //     console.error("Erro na requisição para o SAP:", error.message);
-    //    res.status(error.response ? error.response.status : 500).send({
-     //       error: "Falha na chamada ao SAP BTP",
-    //        details: error.message
-     //   });
-   // }
-};
-
-/******************************************************************************* */
-/*
-app.get('/csrf-token', (req, res) => {
-    const caminhoDoArquivo = 'public/csrfToken.txt';
-
-    // Lê o conteúdo do arquivo e envia como resposta
-    fs.readFile(caminhoDoArquivo, 'utf8', (err, data) => {
-        if (err) {
-            console.error('Erro ao ler o arquivo:', err);
-            return res.status(500).send("Erro ao ler o arquivo.");
-        } else {
-            return res.send(data);
-        }
-    });
-});
-*/
-
-
-/*************************************************************************** */
- 
-
-// Configuração inicial do destino e do caminho da API
-//const destinationName = "S4HANA_API_CLFN_PRODUCT_SRV";
-
-const destinationName = "dev120";
-const apiPath = "sap/opu/odata/sap/z_gw_authorization_poc_srv";
-
-// Criação do cliente SAP usando sap-cf-axios
-const apiClient = SapCfAxios(destinationName);
-
-var csrfToken;
-var cookie ;
-
-// Função para buscar o token CSRF e o cookie usando GET
+// Função para obter o CSRF token
 async function fetchCsrfToken() {
   try {
-    const fetchHeader = { 
-        "x-csrf-token": "fetch",
-       // "sap-client": "110"
-    };
-
-    // Realiza uma requisição GET para obter o token CSRF e o cookie
-    const response = await apiClient.get(apiPath + "/AuthorizationSet", {
-      headers: fetchHeader
+    const response = await axios.get('/sap/opu/odata/sap/z_gw_authorization_poc_srv', {
+      headers: {
+        'x-csrf-token': 'fetch',
+        'sap-client': sapClient,
+      }
     });
 
-    csrfToken =  response.headers.get('x-csrf-token')   // response.headers['x-csrf-token'];
-    cookie = response.headers.get('set-cookie')
+    // Extrai o token e o cookie
+    const csrfToken = response.headers['x-csrf-token'];
+    const cookie = response.headers['set-cookie'];
+    console.log('CSRF Token:', csrfToken);
 
-   
+    return { csrfToken, cookie };
 
-    //csrfToken = Array.isArray(csrfToken) ? csrfToken[0] : csrfToken;
-    //cookie = Array.isArray(cookie) ? cookie[0] : cookie;
-
-
-    console.log("Token CSRF e Cookie obtidos com sucesso.");
   } catch (error) {
-    console.error("Erro ao obter o token CSRF:", error);
+    console.error('Erro ao obter o CSRF token:', error.message);
     throw error;
   }
 }
 
-// Função para criar o registro com uma requisição POST
-async function createAuthorization() {
-  // Primeiro, verifica se o token CSRF e o cookie foram obtidos
-  await fetchCsrfToken();
-
-  //if (!csrfToken || !cookie) {
-  if (!csrfToken) {
-          return response.headers ;
-  }
-
+// Função para fazer a requisição POST usando o token e o cookie
+async function callPostWithCsrf(req, res) {
   try {
-    // Define os dados da requisição com o objeto especificado
-    const authorizationData = {
+    // Primeiro, busca o token CSRF
+    const { csrfToken, cookie } = await fetchCsrfToken();
+
+    // Define os dados para o POST
+    const postData = {
       "Uname": "ZEUS_02",
       "ObjectName": "",
       "StartPurchorg": "",
@@ -203,415 +58,31 @@ async function createAuthorization() {
       ]
     };
 
-    // Realiza a requisição POST com o token CSRF e o cookie
-    const response = await apiClient.post(
-      apiPath + "/AuthorizationSet/",
-      authorizationData,
-      {
-        headers: {
-          "Content-Type": "application/json",
-          "x-csrf-token": csrfToken,
-         //  "sap-client": "110",
-          "Cookie": cookie,
-          "Authorization": "Basic SUFTX0RFVl9QT0M6UGFzc3dvcmRpYXNwb2NAMjAyNA=="
-          
-        }
-      }
-    );
-    console.log("Registro criado com sucesso:", response.data);
-    return response.data;
-  } catch (error) {
-    console.error("Erro ao criar o registro:", error);
-    throw error;
-  }
-}
-
-// Função do endpoint POST /teste
-async function testePOST(req, res) {
-  try {
-    // Chama a função para criar o Business Partner
-    const result = await createAuthorization();
-    // Retorna o resultado da criação para o cliente
-    res.send(response.data)
-  } catch (error) {
-    // Em caso de erro, retorna uma resposta de erro
-    res.send("Error")
-  }
-}
-
-
-
-// Inicia o servidor
-//app.listen(port, () => {
- // console.log(`Servidor rodando em http://localhost:${port}`);
-//});
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/********************************************************************************* */
- 
-
- 
-
-// Configuração inicial do axios com SapCfAxios
-/*
-const cpi = SapCfAxios("S4HANA_API_CLFN_PRODUCT_SRV", {
-  headers: { "sap-client": "110" }
-});
-
-var csrfToken; // Variável para armazenar o token CSRF
-
-// Função para buscar o token CSRF usando uma requisição GET
-const fetchCsrfToken = async () => {
-  try {
-    const csrfResponse = await cpi.get("sap/opu/odata/sap/z_gw_authorization_poc_srv/AuthorizationSet", {
-      headers: { "x-csrf-token": "fetch" }
-    });
-    // Armazena o token CSRF obtido
-    csrfToken = csrfResponse.headers["x-csrf-token"];
-  } catch (error) {
-    console.error("Erro ao obter o token CSRF:", error);
-    throw error; // Lança o erro para ser tratado onde a função for chamada
-  }
-};
-
-// Função para lidar com o POST
-const handlePOST = async (req, res) => {
-  try {
-    // Verifica se o token CSRF ainda não foi obtido e faz a requisição GET para buscá-lo
-    if (!csrfToken) {
-      await fetchCsrfToken();
-    }
-
-    // Faz a requisição POST com o token CSRF obtido
-    const response = await cpi({
-      method: "POST",
-      url: "sap/opu/odata/sap/z_gw_authorization_poc_srv/AuthorizationSet",
+    // Faz a requisição POST com o token CSRF
+    const response = await axios.post('/sap/opu/odata/sap/z_gw_authorization_poc_srv/AuthorizationSet', postData, {
       headers: {
-        "content-type": "application/json",
-        "Accept": "application/json",
-        "sap-client": "110",
-        "Authorization": "Basic SUFTX0RFVl9QT0M6UGFzc3dvcmRpYXNwb2NAMjAyNA==",
-        "x-csrf-token": csrfToken
-      },
-      data: {
-        "Uname": "ZEUS_02",
-        "ObjectName": "",
-        "StartPurchorg": "",
-        "StartPurchgroup": "",
-        "EndPurchorg": "",
-        "EndPurchgroup": "",
-        "Status": false,
-        "OrgLevel": [],
-        "Objects": [
-          {
-            "Uname": "",
-            "ObjectName": "",
-            "Activities": []
-          }
-        ]
+        'x-csrf-token': csrfToken,
+        'Cookie': cookie,
+        'sap-client': sapClient,
+        'Content-Type': 'application/json',
       }
     });
 
-    res.send(response.data);
+    // Envia a resposta do servidor para o cliente
+    res.json(response.data);
+    console.log('Eder Quadros: ', 'Se chegou aqui funcionou!');
+    console.log('Getcookie: ',     cookie);
 
   } catch (error) {
-    console.error("Erro na requisição:", error);
-    res.status(500).send("Erro na requisição"+error);
+    console.error('Erro ao fazer a requisição POST:', error.message);
+    res.status(500).send('Erro ao fazer a requisição POST');
   }
-};
-*/
-
- 
-
-/*
-//const cpi = SapCfAxios( /* destination name */ //"S4HANA_API_CLFN_PRODUCT_SRV", /* axios default config */ //{headers:{"x-csrf-token": "fetch","sap-client":"110"}}, /* xsrfConfig */ {method: 'GET', url:'sap/opu/odata/sap/z_gw_authorization_poc_srv/AuthorizationSet'});
-/*
-const handlePOST = async(req,res)=>{   
-
-    var authorization = req.headers.authorization;
-    const csrfToken = req.headers["x-csrf-token"];
-
-const response = await cpi({
-    method: "POST",
-    url: "sap/opu/odata/sap/z_gw_authorization_poc_srv/AuthorizationSet",
-    headers: {
-        "content-type": "application/xml;charset=utf-8", 
-        "Accept": "text/plain",
-        "sap-client":"110",
-       xsrfHeaderName: "x-csrf-token",
-        "x-csrf-token": csrfToken ,
-    },
-        data: {
-            "Uname": "ZEUS_02",
-            "ObjectName": "",
-            "StartPurchorg": "",
-            "StartPurchgroup": "",
-            "EndPurchorg": "",
-            "EndPurchgroup": "",
-            "Status": false,
-            "OrgLevel": [],
-            "Objects": [
-                {
-                    "Uname": "",
-                    "ObjectName": "",
-                    "Activities": []
-                }
-            ]
-        },
-       xsrfHeaderName: "x-csrf-token",
-    data: {vatNumber}
-});
-
-res.send(response.data); 
-
 }
 
-*/
+// Rota para acionar a requisição GET e POST
+app.post("/serv", callPostWithCsrf);
 
-
-
-
-/********************************************************FUNCIONA O GET ***********************************************************************/
-// busca token 
-const axios2 = SapCfAxios("dev120");
-const handleMaterialsRequest = async(req,res)=>{
-    const response = await axios2({
-        method:"HEAD",
-        url: "sap/opu/odata/sap/z_gw_authorization_poc_srv/AuthorizationSet/",
-       /* params: {
-            $format:"json",
-            $top:"1",
-            "sap-client":"110"
-        },*/
-        headers:{
-         //   accept: "application/json",
-            "set-cookie":"",
-            "x-csrf-token": "fetch",
-           // "sap-client":"110"
-            
-        }
-
-    });
-
-// Captura de cabeçalhos da resposta
-const responseHeaders = response.headers;
- 
-//console.log("Cabeçalhos da resposta:", responseHeaders);
-/*
-res.status(response.status).send({
-    data: response.data,
-    headers: responseHeaders
+// Inicia o servidor Express
+app.listen(PORT, () => {
+  console.log('Servidor rodando');
 });
-
-*/
-
- res.send(response.headers.get('x-csrf-token')+' set-cookie: '+ response.headers.get('set-cookie'));
-
-  // res.send(response.data.d.results);
-
-}
-
-
-// Endpoint POST para /authorization
-app.post("/authorization", handleAuthorizationRequest);
-
-app.get("/materials", handleMaterialsRequest);
-
- //app.post("/eder", handlePOST);
-
-// Rota para o teste POST
-app.post("/teste", testePOST);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- /*
-
-const cpi = SapCfAxios("S4HANA_API_CLFN_PRODUCT_SRV");  // Nome da destination SAP
-
-async function sendData() {
-   // try {
-        const csrfResponse = await cpi.get('/sap/opu/odata/sap/z_gw_authorization_poc_srv/AuthorizationSet', {
-            headers: { 
-                "content-type": "application/json", 
-                'x-csrf-token': 'fetch',
-                "sap-client": "110" 
-            
-            }
-        });
-        const csrfToken = csrfResponse.headers['x-csrf-token'];
-if (csrfToken){
-        const response = await cpi({
-            method: 'POST',
-            url: '/sap/opu/odata/sap/z_gw_authorization_poc_srv/AuthorizationSet',
-            headers: {
-                "content-type": "application/json",
-                "x-csrf-token": csrfToken,
-                "sap-client": "110"
-            },
-            data: {
-                "Uname": "ZEUS_02",
-                "ObjectName": "",
-                "StartPurchorg": "",
-                "StartPurchgroup": "",
-                "EndPurchorg": "",
-                "EndPurchgroup": "",
-                "Status": false,
-                "OrgLevel": [],
-                "Objects": [
-                    {
-                        "Uname": "",
-                        "ObjectName": "",
-                        "Activities": []
-                    }
-                ]
-            }
-        });
-
-
-        return response.data;
-    }else{
-     
-        return "não exite token";
-
-    }
-
- //   } catch (error) {
- //       console.error("Erro na requisição para o SAP:", error.message);
- //       throw error;
- //   }
-}
-
-app.post('/sendData', async (req, res) => {
-   // const jsonBody = req.body;
-  //  try {
-        const responseData = await sendData();
-        if (responseData){
-            res.send(responseData);
-        }else{
-            res.send(responseData+"Nao rolou");
-        }
-        
-
-
-
-
-
-        
-     
-        
-    //} catch (error) {
-      //  res.status(500).json({ error: error.message });
-   // }
-});
-
-
-
-
-/*
-async function sendData() {
-    try {
-        // Passo 1: Obtenha o token CSRF com uma requisição GET
-        const csrfResponse = await cpi.get('/sap/opu/odata/sap/z_gw_authorization_poc_srv/AuthorizationSet/', {
-            headers: {
-                'x-csrf-token': 'fetch',
-                 "sap-client":"110"
-            }
-        });
-        const csrfToken = csrfResponse.headers['x-csrf-token'];
-
-        // Passo 2: Envie uma requisição POST com o token CSRF e dados JSON no corpo
-        const response = await cpi({
-            method: 'POST',
-            url: '/sap/opu/odata/sap/z_gw_authorization_poc_srv/AuthorizationSet/',
-            headers: {
-                "content-type": "application/json",
-                "x-csrf-token": csrfToken,
-                "sap-client": "110"  // Adiciona o cliente SAP se necessário
-            },
-            data: {
-                Uname: "ZEUS_02",
-                ObjectName: "",
-                StartPurchorg: "",
-                StartPurchgroup: "",
-                EndPurchorg: "",
-                EndPurchgroup: "",
-                Status: false,
-                OrgLevel: [],
-                Objects: [{
-                    Uname: "",
-                    ObjectName: "",
-                    Activities: []
-                }]
-            }
-        });
-
-        // Retornar a resposta do SAP
-        return response.data;
-    } catch (error) {
-        console.error("Erro na requisição para o SAP:", error.message);
-        throw error;
-    }
-}
-
-// Executa a função para testar
-sendData().then(responseData => {
-    console.log("Resposta do SAP:", responseData);
-}).catch(error => {
-    console.error("Erro ao enviar dados:", error.message);
-});
-
-*/
-
-/************************************************************************************ */
-
-
-
-
-app.listen(PORT, ()=> {
-
-    console.log('listening on port ${PORT}');
-});
-
-
-
-
-
-
-
-
-
