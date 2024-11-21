@@ -7,7 +7,7 @@ const port = 3000; // Ou a porta que você preferir
 const sapClient = '110';
 const url = 'https://vhudsds4ci.sap.unidasul.com.br:44300/sap/opu/odata/sap/z_gw_authorization_poc_srv/AuthorizationSet';
 const url2 = 'https://vhudsds4ci.sap.unidasul.com.br:44300/sap/opu/odata/sap/z_gw_authorization_poc_srv';
-
+const url3 = "https://vhudsds4ci.sap.unidasul.com.br:44300/sap/opu/odata/sap/API_CLFN_PRODUCT_SRV/A_ProductCharcValue(Product='000000000001021347',ClassType='026',CharcInternalID='883',CharcValuePositionNumber='1')"
 // Função para obter o CSRF token
 async function fetchCsrfToken() {
   try {
