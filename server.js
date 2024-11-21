@@ -1,4 +1,5 @@
 const express = require('express');
+<<<<<<< HEAD
 const swaggerUi = require('swagger-ui-express');
 const swaggerJsdoc = require('swagger-jsdoc');
 const cors = require('cors');
@@ -171,6 +172,21 @@ const axios = sapCfAxios(destinationName);
 
 // Função para obter o CSRF token
 async function fetchCsrfToken(sapClient) {
+=======
+const sapCfAxios = require('sap-cf-axios').default; // Importa o sap-cf-axios
+const app = express();
+const PORT = 8080; // Ou a porta que você preferir
+
+// Configurações de autenticação e URL da API
+const sapClient = '110';
+const destinationName = 'S4HANA_API_CLFN_PRODUCT_SRV'; // Substitua pelo nome do seu destino configurado no SAP Cloud Foundry
+
+// Cria uma instância do sap-cf-axios para o destino SAP
+const axios = sapCfAxios(destinationName);
+
+// Função para obter o CSRF token
+async function fetchCsrfToken() {
+>>>>>>> 3b76495e16bf74ea7706b549a6d0f21f0ef85057
   try {
     const response = await axios.get('/sap/opu/odata/sap/z_gw_authorization_poc_srv', {
       headers: {
@@ -179,6 +195,10 @@ async function fetchCsrfToken(sapClient) {
       }
     });
 
+<<<<<<< HEAD
+=======
+    // Extrai o token e o cookie
+>>>>>>> 3b76495e16bf74ea7706b549a6d0f21f0ef85057
     const csrfToken = response.headers['x-csrf-token'];
     const cookie = response.headers['set-cookie'];
     console.log('CSRF Token:', csrfToken);
@@ -194,6 +214,7 @@ async function fetchCsrfToken(sapClient) {
 // Função para fazer a requisição POST usando o token e o cookie
 async function callPostWithCsrf(req, res) {
   try {
+<<<<<<< HEAD
     // Recebe o sap-client do cabeçalho e o body da requisição POST
     const sapClient = req.headers['sap-client'];
     const body = req.body;
@@ -293,6 +314,8 @@ async function fetchCsrfToken() {
 // Função para fazer a requisição POST usando o token e o cookie
 async function callPostWithCsrf(req, res) {
   try {
+=======
+>>>>>>> 3b76495e16bf74ea7706b549a6d0f21f0ef85057
     // Primeiro, busca o token CSRF
     const { csrfToken, cookie } = await fetchCsrfToken();
 
@@ -336,10 +359,18 @@ async function callPostWithCsrf(req, res) {
   }
 }
 
+<<<<<<< HEAD
 // Rota para acionar a requisição GET e POST   ..
+=======
+// Rota para acionar a requisição GET e POST
+>>>>>>> 3b76495e16bf74ea7706b549a6d0f21f0ef85057
 app.post("/serv", callPostWithCsrf);
 
 // Inicia o servidor Express
 app.listen(PORT, () => {
   console.log('Servidor rodando');
+<<<<<<< HEAD
 }); */
+=======
+});
+>>>>>>> 3b76495e16bf74ea7706b549a6d0f21f0ef85057

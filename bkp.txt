@@ -1,3 +1,11 @@
+const express = require("express");
+const axios = require("axios");
+const SapCfAxios = require("sap-cf-axios").default;
+
+const app =  express();
+const fs = require('fs'); 
+
+const PORT = process.env.PORT || 8080;
 
 const express = require('express');
 const sapRoutes = require('./routes/saproutes'); // Importa as rotas
@@ -21,6 +29,7 @@ app.listen(PORT, () => {
 
 
 
+<<<<<<< HEAD
 
 
 
@@ -69,6 +78,8 @@ const PORT = process.env.PORT || 8080;
 
 
 
+=======
+>>>>>>> 3b76495e16bf74ea7706b549a6d0f21f0ef85057
 // Middleware para interpretar JSON do corpo da requisição
 //app.use(express.json());
 
@@ -256,12 +267,20 @@ async function createAuthorization() {
       "EndPurchorg": "",
       "EndPurchgroup": "",
       "Status": false,
+<<<<<<< HEAD
       "OrgLevel": [ {"EndPurchgroup": ""}],
+=======
+      "OrgLevel": [],
+>>>>>>> 3b76495e16bf74ea7706b549a6d0f21f0ef85057
       "Objects": [
         {
           "Uname": "",
           "ObjectName": "",
+<<<<<<< HEAD
           "Activities": [ {"EndPurchgroup": ""}]
+=======
+          "Activities": []
+>>>>>>> 3b76495e16bf74ea7706b549a6d0f21f0ef85057
         }
       ]
     };
