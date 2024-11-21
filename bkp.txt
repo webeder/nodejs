@@ -197,12 +197,12 @@ async function createAuthorization() {
       "EndPurchorg": "",
       "EndPurchgroup": "",
       "Status": false,
-      "OrgLevel": [],
+      "OrgLevel": [ {"EndPurchgroup": ""}],
       "Objects": [
         {
           "Uname": "",
           "ObjectName": "",
-          "Activities": []
+          "Activities": [ {"EndPurchgroup": ""}]
         }
       ]
     };

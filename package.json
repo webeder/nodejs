@@ -13,6 +13,7 @@
     "@sap/cds": "^8.4.1",
     "@sap/xsenv": "^5.4.0",
     "axios": "^1.7.7",
+    "ejs": "^3.1.10",
     "express": "^4.21.1",
     "express-session": "^1.18.1",
     "sap-cf-axios": "^1.0.2"
