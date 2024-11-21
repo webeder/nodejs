@@ -268,19 +268,27 @@ async function createAuthorization() {
       "EndPurchgroup": "",
       "Status": false,
 <<<<<<< HEAD
+<<<<<<< HEAD
       "OrgLevel": [ {"EndPurchgroup": ""}],
 =======
       "OrgLevel": [],
 >>>>>>> 3b76495e16bf74ea7706b549a6d0f21f0ef85057
+=======
+      "OrgLevel": [ {"EndPurchgroup": ""}],
+>>>>>>> 91fec7b77888183294515c5eb830eee1adb3b231
       "Objects": [
         {
           "Uname": "",
           "ObjectName": "",
 <<<<<<< HEAD
+<<<<<<< HEAD
           "Activities": [ {"EndPurchgroup": ""}]
 =======
           "Activities": []
 >>>>>>> 3b76495e16bf74ea7706b549a6d0f21f0ef85057
+=======
+          "Activities": [ {"EndPurchgroup": ""}]
+>>>>>>> 91fec7b77888183294515c5eb830eee1adb3b231
         }
       ]
     };

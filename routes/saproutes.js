@@ -3,6 +3,7 @@ const express = require('express');
 const router = express.Router();
 const sapController = require( '../controllers/sapcontroller');
 
+<<<<<<< HEAD
 /**
  * @swagger
  * /v1/serv:
@@ -144,10 +145,15 @@ const sapController = require( '../controllers/sapcontroller');
  */
 
 
+=======
+>>>>>>> 91fec7b77888183294515c5eb830eee1adb3b231
 // Define a rota POST para chamar a função do controlador
 router.post('/', sapController.callPostWithCsrf);
 
 module.exports = router;
+<<<<<<< HEAD
 
 
 
+=======
+>>>>>>> 91fec7b77888183294515c5eb830eee1adb3b231

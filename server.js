@@ -1,4 +1,7 @@
+
+// app.js
 const express = require('express');
+<<<<<<< HEAD
 <<<<<<< HEAD
 const swaggerUi = require('swagger-ui-express');
 const swaggerJsdoc = require('swagger-jsdoc');
@@ -75,6 +78,8 @@ app.listen(PORT, () => {
 /*
 // app.js
 const express = require('express');
+=======
+>>>>>>> 91fec7b77888183294515c5eb830eee1adb3b231
 
 const sapRoutes = require('./routes/saproutes'); // Importa as rotas
 const sapRoutes2 = require('./routes/outro'); // Importa as rotas
@@ -104,7 +109,11 @@ app.use('/public', express.static(path.join(__dirname, 'public')));
 
 // Configura a rota principal
 app.use('/serv', sapRoutes);     
+<<<<<<< HEAD
 app.use('/v1/authorization', sapRoutes2);
+=======
+app.use('/authorization', sapRoutes2);
+>>>>>>> 91fec7b77888183294515c5eb830eee1adb3b231
 /*
 
 
@@ -112,7 +121,11 @@ VC DEVE COLOCAR AQUI TODOS AS SUAS ROTAS
 
 
 
+<<<<<<< HEAD
 
+=======
+*/
+>>>>>>> 91fec7b77888183294515c5eb830eee1adb3b231
 
 
 
@@ -126,7 +139,11 @@ app.listen(PORT, () => {
 
 
 
+<<<<<<< HEAD
 */
+=======
+
+>>>>>>> 91fec7b77888183294515c5eb830eee1adb3b231
 
 
 
@@ -172,6 +189,7 @@ const axios = sapCfAxios(destinationName);
 
 // Função para obter o CSRF token
 async function fetchCsrfToken(sapClient) {
+<<<<<<< HEAD
 =======
 const sapCfAxios = require('sap-cf-axios').default; // Importa o sap-cf-axios
 const app = express();
@@ -187,6 +205,8 @@ const axios = sapCfAxios(destinationName);
 // Função para obter o CSRF token
 async function fetchCsrfToken() {
 >>>>>>> 3b76495e16bf74ea7706b549a6d0f21f0ef85057
+=======
+>>>>>>> 91fec7b77888183294515c5eb830eee1adb3b231
   try {
     const response = await axios.get('/sap/opu/odata/sap/z_gw_authorization_poc_srv', {
       headers: {
@@ -196,9 +216,12 @@ async function fetchCsrfToken() {
     });
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
     // Extrai o token e o cookie
 >>>>>>> 3b76495e16bf74ea7706b549a6d0f21f0ef85057
+=======
+>>>>>>> 91fec7b77888183294515c5eb830eee1adb3b231
     const csrfToken = response.headers['x-csrf-token'];
     const cookie = response.headers['set-cookie'];
     console.log('CSRF Token:', csrfToken);
@@ -215,6 +238,9 @@ async function fetchCsrfToken() {
 async function callPostWithCsrf(req, res) {
   try {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 91fec7b77888183294515c5eb830eee1adb3b231
     // Recebe o sap-client do cabeçalho e o body da requisição POST
     const sapClient = req.headers['sap-client'];
     const body = req.body;
@@ -360,17 +386,25 @@ async function callPostWithCsrf(req, res) {
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 // Rota para acionar a requisição GET e POST   ..
 =======
 // Rota para acionar a requisição GET e POST
 >>>>>>> 3b76495e16bf74ea7706b549a6d0f21f0ef85057
+=======
+// Rota para acionar a requisição GET e POST   ..
+>>>>>>> 91fec7b77888183294515c5eb830eee1adb3b231
 app.post("/serv", callPostWithCsrf);
 
 // Inicia o servidor Express
 app.listen(PORT, () => {
   console.log('Servidor rodando');
 <<<<<<< HEAD
+<<<<<<< HEAD
 }); */
 =======
 });
 >>>>>>> 3b76495e16bf74ea7706b549a6d0f21f0ef85057
+=======
+}); */
+>>>>>>> 91fec7b77888183294515c5eb830eee1adb3b231

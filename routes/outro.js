@@ -1,5 +1,6 @@
 // routes/sapRoutes.js
 const express = require('express');
+<<<<<<< HEAD
 const router = express.Router();
 const sapController = require( '../controllers/controleoutro');
 
@@ -209,3 +210,12 @@ const sapController = require( '../controllers/controleoutro');
 router.post('/', sapController.callPostOutro);
 
 module.exports = router;
+=======
+const router2 = express.Router();
+const sapController = require( '../controllers/controleoutro');
+
+// Define a rota POST para chamar a função do controlador
+router2.post('/', sapController.callPostOutro);
+
+module.exports = router2;
+>>>>>>> 91fec7b77888183294515c5eb830eee1adb3b231
