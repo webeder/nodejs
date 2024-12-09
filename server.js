@@ -1,8 +1,6 @@
 
 // app.js
 const express = require('express');
-<<<<<<< HEAD
-<<<<<<< HEAD
 const swaggerUi = require('swagger-ui-express');
 const swaggerJsdoc = require('swagger-jsdoc');
 const cors = require('cors');
@@ -109,46 +107,19 @@ app.use('/public', express.static(path.join(__dirname, 'public')));
 
 // Configura a rota principal
 app.use('/serv', sapRoutes);     
-<<<<<<< HEAD
+
 app.use('/v1/authorization', sapRoutes2);
 =======
 app.use('/authorization', sapRoutes2);
->>>>>>> 91fec7b77888183294515c5eb830eee1adb3b231
+
 /*
 
 
 VC DEVE COLOCAR AQUI TODOS AS SUAS ROTAS 
-
-
-
-<<<<<<< HEAD
-
-=======
-*/
->>>>>>> 91fec7b77888183294515c5eb830eee1adb3b231
-
-
-
-
-
 // Inicia o servidor
 app.listen(PORT, () => {
   console.log('Servidor rodando na porta ${PORT}');
 });
-
-
-
-
-<<<<<<< HEAD
-*/
-=======
-
->>>>>>> 91fec7b77888183294515c5eb830eee1adb3b231
-
-
-
-
-
 /*
 Verifique a Estrutura do Projeto
 
@@ -161,19 +132,7 @@ sap-service/
 └── config/
     └── sapAxios.js
 
-
-
 */
-
-
-
-
-
-
-
-
-
-
 
 
 /*
@@ -184,7 +143,7 @@ const PORT = 8080;
 
 app.use(express.json()); // Middleware para interpretar o JSON no body da requisição
 
-const destinationName = 'S4HANA_API_CLFN_PRODUCT_SRV'; // Nome do destino no SAP Cloud Foundry
+const destinationName = '_API_CLFN_PRODUCT_SRV'; // Nome do destino no SAP Cloud Foundry
 const axios = sapCfAxios(destinationName);
 
 // Função para obter o CSRF token
@@ -197,16 +156,13 @@ const PORT = 8080; // Ou a porta que você preferir
 
 // Configurações de autenticação e URL da API
 const sapClient = '110';
-const destinationName = 'S4HANA_API_CLFN_PRODUCT_SRV'; // Substitua pelo nome do seu destino configurado no SAP Cloud Foundry
+const destinationName = '*****_API_CLFN_PRODUCT_SRV'; // Substitua pelo nome do seu destino configurado no SAP Cloud Foundry
 
 // Cria uma instância do sap-cf-axios para o destino SAP
 const axios = sapCfAxios(destinationName);
 
 // Função para obter o CSRF token
 async function fetchCsrfToken() {
->>>>>>> 3b76495e16bf74ea7706b549a6d0f21f0ef85057
-=======
->>>>>>> 91fec7b77888183294515c5eb830eee1adb3b231
   try {
     const response = await axios.get('/sap/opu/odata/sap/z_gw_authorization_poc_srv', {
       headers: {
@@ -214,14 +170,7 @@ async function fetchCsrfToken() {
         'sap-client': sapClient,
       }
     });
-
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
     // Extrai o token e o cookie
->>>>>>> 3b76495e16bf74ea7706b549a6d0f21f0ef85057
-=======
->>>>>>> 91fec7b77888183294515c5eb830eee1adb3b231
     const csrfToken = response.headers['x-csrf-token'];
     const cookie = response.headers['set-cookie'];
     console.log('CSRF Token:', csrfToken);
@@ -237,10 +186,6 @@ async function fetchCsrfToken() {
 // Função para fazer a requisição POST usando o token e o cookie
 async function callPostWithCsrf(req, res) {
   try {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 91fec7b77888183294515c5eb830eee1adb3b231
     // Recebe o sap-client do cabeçalho e o body da requisição POST
     const sapClient = req.headers['sap-client'];
     const body = req.body;
@@ -309,7 +254,7 @@ const PORT = 8080; // Ou a porta que você preferir
 
 // Configurações de autenticação e URL da API
 const sapClient = '110';
-const destinationName = 'S4HANA_API_CLFN_PRODUCT_SRV'; // Substitua pelo nome do seu destino configurado no SAP Cloud Foundry
+const destinationName = '******_API_CLFN_PRODUCT_SRV'; // Substitua pelo nome do seu destino configurado no SAP Cloud Foundry
 
 // Cria uma instância do sap-cf-axios para o destino SAP
 const axios = sapCfAxios(destinationName);
@@ -340,8 +285,6 @@ async function fetchCsrfToken() {
 // Função para fazer a requisição POST usando o token e o cookie
 async function callPostWithCsrf(req, res) {
   try {
-=======
->>>>>>> 3b76495e16bf74ea7706b549a6d0f21f0ef85057
     // Primeiro, busca o token CSRF
     const { csrfToken, cookie } = await fetchCsrfToken();
 
@@ -385,13 +328,10 @@ async function callPostWithCsrf(req, res) {
   }
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 // Rota para acionar a requisição GET e POST   ..
-=======
+
 // Rota para acionar a requisição GET e POST
->>>>>>> 3b76495e16bf74ea7706b549a6d0f21f0ef85057
-=======
+
 // Rota para acionar a requisição GET e POST   ..
 >>>>>>> 91fec7b77888183294515c5eb830eee1adb3b231
 app.post("/serv", callPostWithCsrf);
@@ -399,12 +339,7 @@ app.post("/serv", callPostWithCsrf);
 // Inicia o servidor Express
 app.listen(PORT, () => {
   console.log('Servidor rodando');
-<<<<<<< HEAD
-<<<<<<< HEAD
+
 }); */
-=======
-});
->>>>>>> 3b76495e16bf74ea7706b549a6d0f21f0ef85057
-=======
-}); */
->>>>>>> 91fec7b77888183294515c5eb830eee1adb3b231
+
+
