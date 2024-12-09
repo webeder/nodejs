@@ -7,7 +7,7 @@ const PORT = process.env.PORT || 5000;
 app.use(express.json());
 
 // Instância do cliente SAP CF Axios
-const axiosInstance = SapCfAxios("S4HANA_API_CLFN_PRODUCT_SRV");
+const axiosInstance = SapCfAxios("*****_API_CLFN_PRODUCT_SRV");
 
 // Função para obter o token CSRF
 const getCsrfToken = async () => {
