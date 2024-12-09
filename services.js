@@ -19,7 +19,7 @@
 
 //}
 /*
-const axios1 = SapCfAxios("S4HANA_API_CLFN_PRODUCT_SRV");
+const axios1 = SapCfAxios("****_API_CLFN_PRODUCT_SRV");
 
 const handleProductsRequest = async(req,res)=>{
     const response = await axios1({
