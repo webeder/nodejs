@@ -15,7 +15,7 @@ async function fetchCsrfToken() {
       headers: {
         'x-csrf-token': 'fetch',
         'sap-client': sapClient ,
-        "Authorization" :"Basic MTc5MDQ1OlVuaWRhc3VsQDIwMjA="
+        "Authorization" :"Basic ************"
       }//,
      // auth: {
      //   username: '179045',  // Substitua pelo seu nome de usuário
@@ -68,7 +68,7 @@ async function callPostWithCsrf(req, res) {
         'Cookie': cookie,
         'sap-client': sapClient,
         'Content-Type': 'application/json',
-        "Authorization" :"Basic MTc5MDQ1OlVuaWRhc3VsQDIwMjA="
+        "Authorization" :"Basic ********************"
       }//,
     //  auth: {
      //   username: '179045',  // Substitua pelo seu nome de usuário
