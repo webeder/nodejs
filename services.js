@@ -1,5 +1,5 @@
 // busca token 
-//const axios2 = SapCfAxios("S4HANA_API_CLFN_PRODUCT_SRV");
+//const axios2 = SapCfAxios("*****_API_CLFN_PRODUCT_SRV");
 //const handleMaterialsRequest = async(req,res)=>{
 //    const response = await axios2({
 //        method:"GET",
